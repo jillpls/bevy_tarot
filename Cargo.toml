@@ -1,0 +1,28 @@
+[package]
+name = "bevy_tarot"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+bevy_tarot_fool = {path = "./crates/bevy_tarot_fool"}
+bevy_tarot_magician = {path = "./crates/bevy_tarot_magician"}
+bevy_tarot_high_priestess = {path = "./crates/bevy_tarot_high_priestess"}
+bevy_tarot_empress = {path = "./crates/bevy_tarot_empress"}
+bevy_tarot_emperor = {path = "./crates/bevy_tarot_emperor"}
+bevy_tarot_hierophant = {path = "./crates/bevy_tarot_hierophant"}
+bevy_tarot_lovers = {path = "./crates/bevy_tarot_lovers"}
+bevy_tarot_chariot = {path = "./crates/bevy_tarot_chariot"}
+bevy_tarot_strength = {path = "./crates/bevy_tarot_strength"}
+bevy_tarot_hermit = {path = "./crates/bevy_tarot_hermit"}
+bevy_tarot_wheel_of_fortune = {path = "./crates/bevy_tarot_wheel_of_fortune"}
+bevy_tarot_justice = {path = "./crates/bevy_tarot_justice"}
+bevy_tarot_hanged_man = {path = "./crates/bevy_tarot_hanged_man"}
+bevy_tarot_death = {path = "./crates/bevy_tarot_death"}
+bevy_tarot_temperance = {path = "./crates/bevy_tarot_temperance"}
+bevy_tarot_devil = {path = "./crates/bevy_tarot_devil"}
+bevy_tarot_tower = {path = "./crates/bevy_tarot_tower"}
+bevy_tarot_star = {path = "./crates/bevy_tarot_star"}
+bevy_tarot_moon = {path = "./crates/bevy_tarot_moon"}
+bevy_tarot_sun = {path = "./crates/bevy_tarot_sun"}
+bevy_tarot_judgement = {path = "./crates/bevy_tarot_judgement"}
+bevy_tarot_world = {path = "./crates/bevy_tarot_world"}

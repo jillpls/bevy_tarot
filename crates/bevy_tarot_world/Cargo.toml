@@ -1,0 +1,16 @@
+[package]
+name = "bevy_tarot_world"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0.204", features = ["derive"] }
+avian2d = {  version = "0.1", features = ["serialize"] }
+bevy_tarot_magician = { path = "../bevy_tarot_magician"}
+bevy_tarot_hermit = { path = "../bevy_tarot_hermit"}
+bevy_ecs = "0.14"
+bevy_log = "0.14"
+bevy_math = "0.14"
+bevy_transform = "0.14"
+ron = "0.8"
+smallvec = { version = "1.13", features = ["serde"] }

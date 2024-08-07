@@ -1,0 +1,6 @@
+[package]
+name = "bevy_tarot_high_priestess"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
