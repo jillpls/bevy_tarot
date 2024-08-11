@@ -1,4 +1,6 @@
 /target
 .idea
+*/target
 crates/*/target
-crates/*/.idea
+crates/*/Cargo.lock
+Cargo.lock
