@@ -1,10 +1,31 @@
+use bevy_ecs::prelude::*;
+use bevy_input::prelude::*;
+use bevy_input::*;
+use serde::{Deserialize, Serialize};
+use smallvec::SmallVec;
 use std::collections::HashMap;
 use std::fmt::Debug;
 use std::hash::Hash;
-use bevy_input::prelude::*;
-use bevy_ecs::prelude::*;
-use serde::{Deserialize, Serialize};
-use smallvec::SmallVec;
+pub use bevy_input;
+
+macro_rules! define_button_count {
+    ($value:expr) => {
+        /// Default stored space in the SmallVec that holds the buttons. Can be set via feature flags.
+        pub const BUTTON_COUNT: usize = $value;
+    };
+}
+
+cfg_if::cfg_if! {
+    if #[cfg(feature = "4button")] {
+        define_button_count!(4);
+    } else if #[cfg(feature= "2button")] {
+        define_button_count!(2);
+    } else if #[cfg(feature = "1button")] {
+        define_button_count!(1);
+    } else {
+        define_button_count!(4);
+    }
+}
 
 /// Generic abstraction over KeyBoard, Mouse and Gamepad Buttons
 /// TODO: What about sticks and stuff
@@ -114,7 +135,7 @@ where
     /// Action of this mapping.
     action: A,
     /// List of Buttons it maps to. Currently optimized for 2 buttons.
-    buttons: SmallVec<[GenericButton; 2]>,
+    buttons: SmallVec<[GenericButton; BUTTON_COUNT]>,
 }
 
 impl<A: InputAction> MappedButtons<A> {
@@ -166,7 +187,6 @@ impl<A: InputAction> Default for ButtonMapping<A> {
 }
 
 impl<A: InputAction> ButtonMapping<A> {
-
     /// Check if the `action` is currently pressed.
     /// If an optional ButtonInput is omitted it returns false for that button.
     pub fn pressed(
@@ -238,7 +258,6 @@ impl<A: InputAction> ButtonMapping<A> {
         self.get_from_button(button).map(|m| m.action)
     }
 
-
     /// Get the buttons that the `action` is mapped to.
     pub fn get_buttons(&self, action: &A) -> Option<&[GenericButton]> {
         self.get_from_action(action).map(|m| m.buttons.as_slice())
@@ -250,7 +269,7 @@ impl<A: InputAction> ButtonMapping<A> {
     }
 
     /// Updates the button mappings for `action`. This replaces the current buttons.
-    pub fn update_buttons(&mut self, action: A, buttons: SmallVec<[GenericButton; 2]>) {
+    pub fn update_buttons(&mut self, action: A, buttons: SmallVec<[GenericButton; BUTTON_COUNT]>) {
         if let Some(mapping) = self
             .from_action_map
             .get(&action)
@@ -271,9 +290,9 @@ impl<A: InputAction> ButtonMapping<A> {
     pub fn insert_mapping(&mut self, mapping: MappedButtons<A>) -> bool {
         if self.from_action_map.contains_key(&mapping.action)
             || mapping
-            .buttons
-            .iter()
-            .any(|b| self.from_button_map.contains_key(b))
+                .buttons
+                .iter()
+                .any(|b| self.from_button_map.contains_key(b))
         {
             return false; // TODO: What do if this happens?
         }
