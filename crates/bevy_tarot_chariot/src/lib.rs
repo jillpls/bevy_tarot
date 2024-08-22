@@ -1,6 +1,37 @@
+//! Input handling utilities for bevy applications.
+//!
+//! # Example usage:
+//! ```
+//! use serde::Serialize;
+//! use bevy_tarot_chariot::{ButtonMapping, InputAction, MappedButtons};
+//! use bevy_tarot_chariot::bevy_input::prelude::*;
+//! #[derive(Copy, Clone, Hash, Debug, PartialEq, Eq, Serialize)]
+//! pub enum SimpleInputAction {
+//!     WalkLeft,
+//!     WalkRight
+//! }
+//!
+//! impl InputAction for SimpleInputAction {
+//!     fn default_mapping() -> ButtonMapping<Self> {
+//!         let mut button_mapping = ButtonMapping::default();
+//!         button_mapping.insert_mapping(MappedButtons::new(SimpleInputAction::WalkLeft, &[KeyCode::KeyA.into()]));
+//!         button_mapping.insert_mapping(MappedButtons::new(SimpleInputAction::WalkRight, &[KeyCode::KeyD.into()]));
+//!         button_mapping
+//!     }
+//! }
+//!
+    //! // In practice this will happen in a system
+//! pub fn main() {
+//!     let mapping = SimpleInputAction::default_mapping();
+//!     let mut input = ButtonInput::default();
+//!     assert!(!mapping.just_pressed(&SimpleInputAction::WalkLeft, Some(&input), None, None));
+//!     input.press(KeyCode::KeyA);
+//!     assert!(mapping.just_pressed(&SimpleInputAction::WalkLeft, Some(&input), None, None));
+//! }
+//! ```
+
 use bevy_ecs::prelude::*;
 use bevy_input::prelude::*;
-use bevy_input::*;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 use std::collections::HashMap;
@@ -127,7 +158,7 @@ pub trait InputAction: Copy + Clone + Hash + Debug + Eq + Serialize {
 
 /// Maps an action to any amount of buttons.
 /// This is optimized for up to 2 mappings.
-#[derive(Serialize, Deserialize)]
+#[derive(Serialize, Deserialize, Clone, Debug)]
 pub struct MappedButtons<A>
 where
     A: InputAction + 'static,
@@ -166,7 +197,7 @@ impl<A: InputAction> MappedButtons<A> {
 }
 
 /// Stores mappings of actions to buttons (and reverse)
-#[derive(Serialize, Deserialize, Resource)]
+#[derive(Serialize, Deserialize, Resource, Clone, Debug)]
 pub struct ButtonMapping<A: InputAction + 'static> {
     /// Store MappedButtons
     mapped_buttons: Vec<MappedButtons<A>>,

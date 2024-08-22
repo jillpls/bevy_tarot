@@ -866,6 +866,7 @@ version = "0.1.0"
 dependencies = [
  "bevy_ecs",
  "bevy_input",
+ "cfg-if",
  "serde",
  "smallvec",
 ]
@@ -932,7 +933,6 @@ dependencies = [
  "ron",
  "serde",
  "smallvec",
- "thiserror",
 ]
 
 [[package]]

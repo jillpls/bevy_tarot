@@ -2,5 +2,6 @@
 .idea
 */target
 crates/*/target
+crates/bevy_tarot_temperance/temperance_editor/target
 crates/*/Cargo.lock
 Cargo.lock
